@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EnvelopeType
  *
@@ -27,6 +28,7 @@
  */
 
 namespace Maileva\Client\Model;
+
 use \Maileva\Client\ObjectSerializer;
 
 /**
@@ -44,7 +46,8 @@ class EnvelopeType
      * Possible values of this enum
      */
     const DL = 'DL';
-const C4 = 'C4';
+    const C4 = 'C4';
+    const C6 = 'C6';
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -53,6 +56,8 @@ const C4 = 'C4';
     {
         return [
             self::DL,
-self::C4,        ];
+            self::C4,
+            self::C6,
+        ];
     }
 }
