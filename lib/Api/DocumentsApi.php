@@ -39,6 +39,7 @@ use Maileva\Client\ApiException;
 use Maileva\Client\Configuration;
 use Maileva\Client\HeaderSelector;
 use Maileva\Client\ObjectSerializer;
+use GuzzleHttp\Psr7\Utils;
 
 /**
  * DocumentsApi Class Doc Comment
@@ -1491,7 +1492,7 @@ class DocumentsApi
         // form params
         if ($document !== null) {
             $multipart = true;
-            $formParams['document'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue($document), 'rb');
+            $formParams['document'] = Utils::tryFopen(ObjectSerializer::toFormValue($document), 'rb');
         }
         // form params
         if ($metadata !== null) {
