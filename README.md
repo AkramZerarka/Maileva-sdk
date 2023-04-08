@@ -15,7 +15,7 @@ PHP 5.5 and later
 To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
 
 ```
-composer require ceddyg/maileva-sdk-php
+composer require akramzerarka/maileva-sdk-php
 ```
 
 ## Tests
