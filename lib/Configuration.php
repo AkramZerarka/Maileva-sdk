@@ -122,7 +122,7 @@ class Configuration
         if (App::environment() == "local") {
             $this->host = 'https://api.sandbox.maileva.net/registered_mail/v2';
         } else {
-            $this->host = 'https://api.maileva.net/registered_mail/v2';
+            $this->host = 'https://api.maileva.com/registered_mail/v2';
         }
         $this->tempFolderPath = sys_get_temp_dir();
     }
