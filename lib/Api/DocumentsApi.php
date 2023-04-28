@@ -31,6 +31,7 @@ namespace Maileva\Client\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
@@ -1491,7 +1492,7 @@ class DocumentsApi
         // form params
         if ($document !== null) {
             $multipart = true;
-            $formParams['document'] = GuzzleHttp\Psr7\Utils::tryFopen(ObjectSerializer::toFormValue($document), 'rb');
+            $formParams['document'] = Utils::tryFopen(ObjectSerializer::toFormValue($document), 'rb');
         }
         // form params
         if ($metadata !== null) {
