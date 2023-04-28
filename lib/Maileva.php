@@ -1,10 +1,10 @@
 <?php
 
 /*
- * API pour envoyer et suivre des Lettres Recommandées En Ligne distribuées par le facteur  Elles comprennent les fonctions clés pour :   
- * - créer un envoi,  
- * - ajouter des documents et des destinataires,  
- * - choisir ses options (noir & blanc ou couleur, recto ou recto-verso, avec ou sans AR …).  
+ * API pour envoyer et suivre des Lettres Recommandées En Ligne distribuées par le facteur  Elles comprennent les fonctions clés pour :
+ * - créer un envoi,
+ * - ajouter des documents et des destinataires,
+ * - choisir ses options (noir & blanc ou couleur, recto ou recto-verso, avec ou sans AR …).
  * - suivre la production (date de planification, suivi de l’envoi…).  Voir la documentation \"notification_center\".
  */
 
@@ -12,6 +12,7 @@ namespace Maileva\Client;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Query;
+use Illuminate\Support\Facades\App;
 use Maileva\Client\Configuration;
 use Maileva\Client\Api\EnvoiApi;
 use Maileva\Client\Api\DocumentsApi;
@@ -34,6 +35,8 @@ class Maileva
      */
     protected $config;
 
+    protected $url;
+
     public function __construct(
         $username,
         $password,
@@ -49,6 +52,11 @@ class Maileva
         $this->config->setPassword($password);
 
         $this->connexion($client_id, $client_secret);
+        if (App::environment() == "local") {
+            $this->url = 'https://connexion.sandbox.maileva.net/auth/realms/services/protocol/openid-connect/token';
+        } else {
+            $this->url = 'https://connexion.maileva.com/auth/realms/services/protocol/openid-connect/token';
+        }
     }
 
     protected function connexion($client_id, $client_secret)
@@ -56,7 +64,7 @@ class Maileva
         $response = $this->client->send(
             new \GuzzleHttp\Psr7\Request(
                 'POST',
-                'https://connexion.sandbox.maileva.net/auth/realms/services/protocol/openid-connect/token',
+                $this->url,
                 [
                     'Cache-Control' => 'no-cache',
                     'Content-Type' => 'application/x-www-form-urlencoded'
@@ -79,7 +87,7 @@ class Maileva
     }
 
     /**
-     * 
+     *
      * @return EnvoiApi
      */
     public function envoi()
@@ -91,7 +99,7 @@ class Maileva
     }
 
     /**
-     * 
+     *
      * @return DocumentsApi
      */
     public function documents()
@@ -103,7 +111,7 @@ class Maileva
     }
 
     /**
-     * 
+     *
      * @return DestinatairesApi
      */
     public function destinataires()
