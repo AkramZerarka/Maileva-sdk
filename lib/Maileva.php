@@ -52,15 +52,15 @@ class Maileva
         $this->config->setPassword($password);
 
         $this->connexion($client_id, $client_secret);
+    }
+
+    protected function connexion($client_id, $client_secret)
+    {
         if (App::environment() == "local") {
             $this->url = 'https://connexion.sandbox.maileva.net/auth/realms/services/protocol/openid-connect/token';
         } else {
             $this->url = 'https://connexion.maileva.com/auth/realms/services/protocol/openid-connect/token';
         }
-    }
-
-    protected function connexion($client_id, $client_secret)
-    {
         $response = $this->client->send(
             new \GuzzleHttp\Psr7\Request(
                 'POST',
