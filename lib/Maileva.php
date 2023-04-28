@@ -35,7 +35,7 @@ class Maileva
      */
     protected $config;
 
-    protected $url;
+    protected $url = 'https://connexion.sandbox.maileva.net/auth/realms/services/protocol/openid-connect/token';
 
     public function __construct(
         $username,
@@ -45,6 +45,12 @@ class Maileva
         ClientInterface $client,
         Configuration $config
     ) {
+
+        if (App::environment() == "local") {
+            $this->url = 'https://connexion.sandbox.maileva.net/auth/realms/services/protocol/openid-connect/token';
+        } else {
+            $this->url = 'https://connexion.maileva.com/auth/realms/services/protocol/openid-connect/token';
+        }
         $this->client = $client;
         $this->config = $config;
 
@@ -56,11 +62,6 @@ class Maileva
 
     protected function connexion($client_id, $client_secret)
     {
-        if (App::environment() == "local") {
-            $this->url = 'https://connexion.sandbox.maileva.net/auth/realms/services/protocol/openid-connect/token';
-        } else {
-            $this->url = 'https://connexion.maileva.com/auth/realms/services/protocol/openid-connect/token';
-        }
         $response = $this->client->send(
             new \GuzzleHttp\Psr7\Request(
                 'POST',
