@@ -1491,7 +1491,7 @@ class DocumentsApi
         // form params
         if ($document !== null) {
             $multipart = true;
-            $formParams['document'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue($document), 'rb');
+            $formParams['document'] = GuzzleHttp\Psr7\Utils::tryFopen(ObjectSerializer::toFormValue($document), 'rb');
         }
         // form params
         if ($metadata !== null) {
