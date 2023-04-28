@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration
  * PHP version 5
@@ -26,6 +27,8 @@
  */
 
 namespace Maileva\Client;
+
+use Illuminate\Support\Facades\App;
 
 /**
  * Configuration Class Doc Comment
@@ -115,6 +118,12 @@ class Configuration
      */
     public function __construct()
     {
+
+        if (App::environment() == "local") {
+            $this->host = 'https://api.sandbox.maileva.net/registered_mail/v2';
+        } else {
+            $this->host = 'https://api.maileva.net/registered_mail/v2';
+        }
         $this->tempFolderPath = sys_get_temp_dir();
     }
 
